@@ -8,108 +8,290 @@
     <meta name="generator" content="Eleventy" />
     <style>
       :root {
-        --bg: hsl(0 0% 100%);
-        --fg: hsl(220 13% 18%);
-        --muted: hsl(220 9% 46%);
-        --border: hsl(220 13% 88%);
-        --card: hsl(220 14% 98%);
-        --accent: hsl(217 91% 45%);
-        --ok: hsl(142 71% 35%);
+        --bg: hsl(220 20% 97%);
+        --surface: hsl(0 0% 100%);
+        --fg: hsl(222 25% 15%);
+        --muted: hsl(220 12% 50%);
+        --border: hsl(220 16% 90%);
+        --card: hsl(0 0% 100%);
+        --accent: hsl(243 75% 59%);
+        --accent-light: hsl(243 75% 96%);
+        --accent-hover: hsl(243 75% 50%);
+        --ok: hsl(152 60% 35%);
+        --ok-light: hsl(152 60% 95%);
+        --warn: hsl(32 90% 45%);
+        --shadow-sm: 0 1px 3px hsl(222 25% 15% / 0.06), 0 1px 2px hsl(222 25% 15% / 0.04);
+        --shadow-md: 0 4px 12px hsl(222 25% 15% / 0.08), 0 2px 4px hsl(222 25% 15% / 0.04);
+        --radius: 0.75rem;
       }
-      * { box-sizing: border-box; }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      [hidden] { display: none !important; }
+
       body {
-        margin: 0;
-        font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+        font: 15px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
         color: var(--fg);
         background: var(--bg);
-        padding: 1.5rem;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
       }
-      header { max-width: 70rem; margin: 0 auto 1.5rem; }
-      h1 { font-size: 1.5rem; margin: 0 0 0.25rem; }
-      p.sub { color: var(--muted); margin: 0 0 1rem; }
+
+      /* ── top bar ── */
+      .topbar {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 1.25rem 1.5rem 1rem;
+      }
+      .topbar-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .topbar-row {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      h1 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--fg);
+        white-space: nowrap;
+      }
+      h1 .tag {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--accent-light);
+        border-radius: 999px;
+        padding: 0.15em 0.6em;
+        vertical-align: middle;
+        margin-left: 0.4rem;
+        position: relative;
+        top: -0.1em;
+      }
+      p.sub {
+        color: var(--muted);
+        font-size: 0.875rem;
+        flex: 1;
+      }
+
+      /* ── search ── */
+      .search-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      .search-wrap svg {
+        position: absolute;
+        left: 0.75rem;
+        color: var(--muted);
+        pointer-events: none;
+        flex-shrink: 0;
+      }
       .search {
         width: 100%;
-        max-width: 70rem;
-        padding: 0.6rem 0.8rem;
-        font-size: 1rem;
-        border: 1px solid var(--border);
-        border-radius: 0.5rem;
+        padding: 0.6rem 0.8rem 0.6rem 2.4rem;
+        font: inherit;
+        font-size: 0.9rem;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg);
+        color: var(--fg);
+        transition: border-color 0.15s, box-shadow 0.15s;
+        outline: none;
       }
-      .count { color: var(--muted); font-size: 0.875rem; margin-top: 0.5rem; }
+      .search:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px hsl(243 75% 59% / 0.15);
+      }
+      .count {
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        min-height: 1.2em;
+      }
+
+      /* ── grid ── */
       main {
-        max-width: 70rem;
-        margin: 1.5rem auto 0;
+        flex: 1;
+        max-width: 72rem;
+        width: 100%;
+        margin: 1.5rem auto;
+        padding: 0 1.5rem;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
         gap: 1rem;
+        align-content: start;
       }
+
+      /* ── card ── */
       .card {
-        border: 1px solid var(--border);
-        border-radius: 0.6rem;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
         background: var(--card);
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
       }
+      .card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+        border-color: hsl(243 75% 59% / 0.3);
+      }
+
       .thumb {
-        background: repeating-conic-gradient(hsl(0 0% 93%) 0 25%, hsl(0 0% 100%) 0 50%) 0 / 1.4rem 1.4rem;
+        background:
+          repeating-conic-gradient(hsl(220 16% 92%) 0 25%, hsl(0 0% 100%) 0 50%)
+          0 / 1.2rem 1.2rem;
         display: flex;
         align-items: center;
         justify-content: center;
         min-height: 9rem;
-        max-height: 14rem;
+        max-height: 13rem;
         overflow: hidden;
       }
-      .thumb img { max-width: 100%; max-height: 14rem; display: block; }
-      .filetype { font-size: 2.5rem; color: var(--muted); padding: 2rem; }
-      .meta { padding: 0.6rem 0.7rem; }
+      .thumb img {
+        max-width: 100%;
+        max-height: 13rem;
+        display: block;
+        object-fit: contain;
+      }
+      .filetype {
+        font-size: 1.75rem;
+        font-weight: 700;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        color: var(--muted);
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.9rem;
+        letter-spacing: -0.02em;
+      }
+
+      .meta {
+        padding: 0.65rem 0.8rem 0.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex: 1;
+      }
       .name {
         font-family: ui-monospace, "SF Mono", Menlo, monospace;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         word-break: break-all;
+        color: var(--fg);
+        font-weight: 500;
       }
-      .alt { color: var(--muted); font-size: 0.8rem; margin: 0.25rem 0 0; }
-      .alt.empty { color: hsl(35 90% 40%); }
-      .btns { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.6rem; }
+      .alt {
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.4;
+        flex: 1;
+      }
+      .alt.empty {
+        color: var(--warn);
+        font-style: italic;
+      }
+
+      /* ── copy buttons ── */
+      .btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 0.5rem;
+      }
       button.copy {
         font: inherit;
-        font-size: 0.75rem;
-        padding: 0.25rem 0.55rem;
-        border: 1px solid var(--border);
-        border-radius: 0.4rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        padding: 0.28rem 0.6rem;
+        border: 1.5px solid var(--border);
+        border-radius: 999px;
         background: var(--bg);
         color: var(--accent);
         cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
       }
-      button.copy:hover { border-color: var(--accent); }
-      button.copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-      button.copy.copied { color: var(--ok); border-color: var(--ok); }
-      .empty-state { color: var(--muted); grid-column: 1 / -1; text-align: center; padding: 2rem; }
+      button.copy:hover {
+        background: var(--accent-light);
+        border-color: var(--accent);
+      }
+      button.copy:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      button.copy.copied {
+        color: var(--ok);
+        border-color: var(--ok);
+        background: var(--ok-light);
+      }
+
+      .empty-state {
+        color: var(--muted);
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 4rem 2rem;
+        font-size: 0.95rem;
+      }
+
+      /* ── footer ── */
       footer {
-        max-width: 70rem;
-        margin: 3rem auto 0;
-        padding-top: 1.25rem;
+        background: var(--surface);
         border-top: 1px solid var(--border);
         color: var(--muted);
-        font-size: 0.8rem;
-        line-height: 1.6;
+        font-size: 0.78rem;
+        line-height: 1.7;
+        padding: 1.25rem 1.5rem;
+        text-align: center;
       }
-      footer a { color: var(--accent); }
+      footer .footer-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.25rem 1.5rem;
+      }
+      footer a { color: var(--accent); text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
     </style>
   </head>
   <body>
-    <header>
-      <h1>{{ site.title }}</h1>
-      <p class="sub">{{ site.description }} Click a button to copy that form to your clipboard.</p>
-      <input
-        class="search"
-        type="search"
-        id="search"
-        placeholder="Filter by filename or description…"
-        aria-label="Filter assets"
-      />
-      <p class="count" id="count"></p>
-    </header>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="topbar-row">
+          <h1>{{ site.title }}<span class="tag">11ty</span></h1>
+          <p class="sub">{{ site.description }} Click a button to copy that form to your clipboard.</p>
+        </div>
+        <div class="search-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input
+            class="search"
+            type="search"
+            id="search"
+            placeholder="Filter by filename or description…"
+            aria-label="Filter assets"
+          />
+        </div>
+        <p class="count" id="count"></p>
+      </div>
+    </div>
 
     <main id="grid">
       {%- for asset in assets -%}
@@ -150,13 +332,11 @@
     </main>
 
     <footer>
-      <p>
-        {{ site.copyright }} — original course images licensed under
-        <a href="{{ site.license_url }}" rel="license">{{ site.license_name }}</a>.
-        Student work and third-party media are excluded; see NOTICE.md.
-      </p>
-      <p><a href="{{ site.repository_url }}">View this repository on GitHub</a></p>
-      <p>Built with <a href="https://www.11ty.dev/">Eleventy</a></p>
+      <div class="footer-inner">
+        <span>{{ site.copyright }}</span>
+        <span>Original course images licensed under <a href="{{ site.license_url }}" rel="license">{{ site.license_name }}</a>. Student work and third-party media excluded; see NOTICE.md.</span>
+        <span><a href="{{ site.repository_url }}">GitHub</a> · Built with <a href="https://www.11ty.dev/">Eleventy</a></span>
+      </div>
     </footer>
 
     <script>
