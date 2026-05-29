@@ -1,0 +1,9 @@
+{
+  "title": "IDMX-225 course assets",
+  "description": "Media host for IDMX-225 — browse assets and copy links.",
+  "baseUrl": "https://rvcc-idmx.github.io/idmx-225-assets",
+  "copyright": "© 2026 Steven Caruso, Cynthia Teeters and Lynn Sichel",
+  "license_name": "CC BY-NC-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "repository_url": "https://github.com/RVCC-IDMX/idmx-225-assets"
+}

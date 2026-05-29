@@ -1,8 +1,3 @@
----
-# Front matter (even empty) tells Jekyll to process the Liquid below.
-# This page is generated on every push by GitHub Pages' native Jekyll build:
-# it lists whatever lives in /assets/ — adding a file and pushing updates it.
----
 <!doctype html>
 <html lang="en">
   <head>
@@ -65,11 +60,7 @@
         overflow: hidden;
       }
       .thumb img { max-width: 100%; max-height: 14rem; display: block; }
-      .filetype {
-        font-size: 2.5rem;
-        color: var(--muted);
-        padding: 2rem;
-      }
+      .filetype { font-size: 2.5rem; color: var(--muted); padding: 2rem; }
       .meta { padding: 0.6rem 0.7rem; }
       .name {
         font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -119,44 +110,41 @@
       <p class="count" id="count"></p>
     </header>
 
-    {% assign imgexts = "png jpg jpeg gif svg webp bmp" | split: " " %}
-    {% assign assets = site.static_files | where_exp: "f", "f.path contains '/assets/'" | sort: "name" %}
     <main id="grid">
-      {% for f in assets %}
-        {% assign ext = f.extname | remove: "." | downcase %}
-        {% assign isimg = false %}
-        {% if imgexts contains ext %}{% assign isimg = true %}{% endif %}
-        {% assign alt = site.data.alts[f.name] | default: "" %}
-        {% assign url = f.path | absolute_url %}
-        {% capture imgtag %}<img src="{{ url }}" alt="{{ alt }}">{% endcapture %}
-        {% capture mdimg %}![{{ alt }}]({{ url }}){% endcapture %}
-        {% capture mdlink %}[{{ f.name }}]({{ url }}){% endcapture %}
-        <article class="card" data-name="{{ f.name | downcase }}" data-alt="{{ alt | downcase | escape }}">
+      {%- for asset in assets -%}
+        {%- set alt = alts[asset.name] or "" -%}
+        {%- set url = site.baseUrl + "/assets/" + asset.name -%}
+        <article
+          class="card"
+          data-name="{{ asset.name }}"
+          data-alt="{{ alt }}"
+          data-url="{{ url }}"
+        >
           <div class="thumb">
-            {% if isimg %}
+            {%- if asset.isImage -%}
               <img src="{{ url }}" alt="{{ alt }}" loading="lazy" />
-            {% else %}
-              <span class="filetype">.{{ ext }}</span>
-            {% endif %}
+            {%- else -%}
+              <span class="filetype">.{{ asset.ext }}</span>
+            {%- endif -%}
           </div>
           <div class="meta">
-            <div class="name">{{ f.name }}</div>
-            {% if alt != "" %}
+            <div class="name">{{ asset.name }}</div>
+            {%- if alt -%}
               <p class="alt">{{ alt }}</p>
-            {% else %}
+            {%- else -%}
               <p class="alt empty">no alt text</p>
-            {% endif %}
+            {%- endif -%}
             <div class="btns">
-              <button class="copy" data-copy="{{ url | escape }}">URL</button>
-              {% if isimg %}
-                <button class="copy" data-copy="{{ imgtag | escape }}">HTML</button>
-                <button class="copy" data-copy="{{ mdimg | escape }}">MD image</button>
-              {% endif %}
-              <button class="copy" data-copy="{{ mdlink | escape }}">MD link</button>
+              <button class="copy" data-fmt="url">URL</button>
+              {%- if asset.isImage -%}
+                <button class="copy" data-fmt="html">HTML</button>
+                <button class="copy" data-fmt="mdimg">MD image</button>
+              {%- endif -%}
+              <button class="copy" data-fmt="mdlink">MD link</button>
             </div>
           </div>
         </article>
-      {% endfor %}
+      {%- endfor -%}
       <p class="empty-state" id="noresults" hidden>No assets match your filter.</p>
     </main>
 
@@ -166,9 +154,7 @@
         <a href="{{ site.license_url }}" rel="license">{{ site.license_name }}</a>.
         Student work and third-party media are excluded; see NOTICE.md.
       </p>
-      <p>
-        <a href="{{ site.repository_url }}">View this repository on GitHub</a>
-      </p>
+      <p><a href="{{ site.repository_url }}">View this repository on GitHub</a></p>
     </footer>
 
     <script>
@@ -177,9 +163,8 @@
       const count = document.getElementById("count");
       const noResults = document.getElementById("noresults");
 
-      function updateCount(n) {
-        count.textContent = n + " of " + cards.length + " asset" + (cards.length === 1 ? "" : "s");
-      }
+      const updateCount = (n) =>
+        (count.textContent = n + " of " + cards.length + " asset" + (cards.length === 1 ? "" : "s"));
       updateCount(cards.length);
 
       search.addEventListener("input", () => {
@@ -187,7 +172,9 @@
         let shown = 0;
         for (const card of cards) {
           const match =
-            !q || card.dataset.name.includes(q) || card.dataset.alt.includes(q);
+            !q ||
+            card.dataset.name.toLowerCase().includes(q) ||
+            card.dataset.alt.toLowerCase().includes(q);
           card.hidden = !match;
           if (match) shown++;
         }
@@ -195,11 +182,28 @@
         updateCount(shown);
       });
 
+      // Build the requested copy form from the card's data attributes (decoded
+      // by the browser), so no server-side string escaping is needed.
+      function snippet(fmt, { url, alt, name }) {
+        switch (fmt) {
+          case "html": return '<img src="' + url + '" alt="' + alt + '">';
+          case "mdimg": return "![" + alt + "](" + url + ")";
+          case "mdlink": return "[" + name + "](" + url + ")";
+          default: return url;
+        }
+      }
+
       document.addEventListener("click", async (e) => {
         const btn = e.target.closest("button.copy");
         if (!btn) return;
+        const card = btn.closest(".card");
+        const text = snippet(btn.dataset.fmt, {
+          url: card.dataset.url,
+          alt: card.dataset.alt,
+          name: card.dataset.name,
+        });
         try {
-          await navigator.clipboard.writeText(btn.dataset.copy);
+          await navigator.clipboard.writeText(text);
           const label = btn.textContent;
           btn.textContent = "Copied!";
           btn.classList.add("copied");
