@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <!-- GRID placeholder: marks an image that needs replacing. Console light tokens. -->
+  <rect width="1200" height="675" fill="hsl(220 26% 96%)"/>
+  <rect x="40" y="40" width="1120" height="595" rx="22" fill="hsl(358 82% 96%)"
+        stroke="hsl(358 58% 78%)" stroke-width="3" stroke-dasharray="14 10"/>
+  <circle cx="600" cy="200" r="56" fill="hsl(358 62% 44%)"/>
+  <text x="600" y="232" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+        font-size="84" font-weight="800" fill="hsl(0 0% 100%)">!</text>
+  <text x="600" y="345" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+        font-size="56" font-weight="800" fill="hsl(222 34% 13%)">Hey — I need replacing!</text>
+  <text x="600" y="400" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+        font-size="28" font-weight="500" fill="hsl(220 14% 37%)">This placeholder marks an image that is missing or broken.</text>
+  <rect x="380" y="445" width="440" height="56" rx="28" fill="hsl(0 0% 100%)" stroke="hsl(220 20% 70%)" stroke-width="1.5"/>
+  <text x="600" y="481" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace"
+        font-size="24" font-weight="600" fill="hsl(358 62% 44%)">search source for: FIXME-404</text>
+  <g transform="translate(556, 555)">
+    <rect width="20" height="20" rx="5" fill="hsl(230 76% 52%)"/>
+    <rect x="26" width="20" height="20" rx="5" fill="hsl(230 76% 52%)" opacity="0.35"/>
+    <rect y="26" width="20" height="20" rx="5" fill="hsl(230 76% 52%)" opacity="0.35"/>
+    <rect x="26" y="26" width="20" height="20" rx="5" fill="hsl(230 76% 52%)" opacity="0.35"/>
+  </g>
+  <text x="600" y="625" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+        font-size="18" font-weight="700" letter-spacing="3" fill="hsl(220 14% 37%)">GRID COURSE CONTENT</text>
+</svg>
