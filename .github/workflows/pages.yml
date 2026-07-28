@@ -25,6 +25,9 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # Fails the build if assets/ and _data/alts.json have drifted apart, so a
+      # missing or stranded alt-text key shows up here and not months later.
+      - run: npm run check
       - run: npx @11ty/eleventy
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

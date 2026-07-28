@@ -7,7 +7,9 @@
   "type": "module",
   "scripts": {
     "build": "eleventy",
-    "start": "eleventy --serve"
+    "start": "eleventy --serve",
+    "check": "node scripts/check-assets.js",
+    "fix-renames": "node scripts/carry-renamed-alts.js"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0"
