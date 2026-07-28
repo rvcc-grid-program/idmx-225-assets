@@ -11,6 +11,9 @@
     "check": "node scripts/check-assets.js",
     "fix-renames": "node scripts/carry-renamed-alts.js"
   },
+  "engines": {
+    "node": ">=20.12"
+  },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0"
   }
