@@ -8,6 +8,18 @@ Canvas pages as absolute URLs.
 The course content (text, pages, quizzes) lives in a separate **private**
 repository.
 
+## Adding an asset
+
+1. Drop the file into `assets/`. Subfolders are supported and are walked
+   recursively.
+2. Add its alt text to `_data/alts.json`. The key is the file's path relative to
+   `assets/` — `cat.jpg` at the top level, `grid-invite/claim-01-picker.png`
+   inside a subfolder.
+3. Push to `main`. The Pages workflow rebuilds the gallery and redeploys.
+
+Preview locally with `npm start` (Eleventy dev server) or build once with
+`npm run build`.
+
 ## License
 
 Original images © 2026 Steven Caruso, Cynthia Teeters and Lynn Sichel, licensed
