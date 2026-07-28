@@ -8,6 +8,17 @@ Canvas pages as absolute URLs.
 The course content (text, pages, quizzes) lives in a separate **private**
 repository.
 
+## Setup
+
+Install once per clone, before any of the `npm run` commands below:
+
+```bash
+npm ci
+```
+
+Node 24 is what CI uses. Anything from Node 20.12 up will work — the asset walk
+relies on recursive `readdirSync` and `Dirent.parentPath`.
+
 ## Adding an asset
 
 1. Drop the file into `assets/`. Subfolders are supported and are walked
