@@ -14,6 +14,9 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const assetsDir = path.join(root, "assets");
 const altsFile = path.join(root, "_data", "alts.json");
 
+// Canvas LMS flags any alt attribute longer than this. Aim for ~110 when writing.
+const MAX_ALT_LENGTH = 120;
+
 // Mirrors the walk in _data/assets.js — if that changes, change this too.
 function listAssets() {
   return fs
@@ -41,6 +44,10 @@ const keys = Object.keys(alts);
 const orphans = keys.filter((key) => !files.includes(key));
 const missing = files.filter((file) => !keys.includes(file));
 const empty = keys.filter((key) => !String(alts[key]).trim());
+// Canvas LMS rejects alt text over 120 characters, so keep every string under it.
+const tooLong = keys
+  .filter((key) => String(alts[key]).length > MAX_ALT_LENGTH)
+  .map((key) => `${key} (${String(alts[key]).length} chars)`);
 const unsorted = JSON.stringify(keys) !== JSON.stringify([...keys].sort());
 
 let failed = false;
@@ -59,6 +66,12 @@ failed =
 failed =
   report("Keys with empty alt text", empty, "write a description of what the image shows") ||
   failed;
+failed =
+  report(
+    `Keys with alt text over ${MAX_ALT_LENGTH} characters`,
+    tooLong,
+    `Canvas LMS rejects longer alt attributes; condense to about 110 characters`,
+  ) || failed;
 
 if (unsorted) {
   console.error("\nKeys in alts.json are not sorted.");

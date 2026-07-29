@@ -25,7 +25,8 @@ relies on recursive `readdirSync` and `Dirent.parentPath`.
    recursively.
 2. Add its alt text to `_data/alts.json`. The key is the file's path relative to
    `assets/` — `cat.jpg` at the top level, `grid-invite/claim-01-picker.png`
-   inside a subfolder.
+   inside a subfolder. Keep it under 120 characters — Canvas LMS flags anything
+   longer — and aim for about 110.
 3. Run `npm run check` to confirm every file has a description.
 4. Push to `main`. The Pages workflow rebuilds the gallery and redeploys.
 
@@ -50,7 +51,8 @@ there is nothing to carry.
 `assets/` and `_data/alts.json` have to describe the same set of files. They drift
 silently — a new file renders with a "no alt text" flag, and a renamed file leaves
 its old key stranded while the new name has none. `npm run check` catches all of
-it: files with no key, keys with no file, empty descriptions, and unsorted keys.
+it: files with no key, keys with no file, empty descriptions, descriptions over
+120 characters (Canvas LMS rejects those), and unsorted keys.
 
 The Pages workflow runs `npm run check` before building, so drift fails the deploy
 rather than shipping. Every asset needs a real description before it can go live —
