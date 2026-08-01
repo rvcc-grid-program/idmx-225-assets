@@ -19,6 +19,44 @@ npm ci
 Node 24 is what CI uses. Anything from Node 20.12 up will work — the asset walk
 relies on recursive `readdirSync` and `Dirent.parentPath`.
 
+## Using an asset that is already published
+
+Browse the gallery: <https://rvcc-grid-program.github.io/idmx-225-assets/>
+
+Every published asset is a card there showing the image, its filename, its alt
+text, and buttons that copy a ready-made snippet to your clipboard. The search
+box filters on filename *and* alt text, so you can find a screenshot by what is
+in it ("lighthouse", "carrots", "drop cap") without remembering what it was
+named.
+
+Four snippet forms are available. Images get all four; non-image assets like
+`.zip` and `.xls` get only **URL** and **MD link**, since there is nothing to
+embed:
+
+- **URL** — the bare absolute URL. Use it when something else wants just a link.
+- **HTML** — `<img src="…" alt="…">`. Paste this into the Canvas rich content
+  editor.
+- **MD image** — `![alt](url)`. This is the form the private course-content repo
+  uses, because its pages are markdown and its build guard rejects raw HTML in
+  prose.
+- **MD link** — `[filename](url)`. A plain link, for linking to a download
+  rather than showing it.
+
+The **MD image** button on `vscode-search-icon.png` copies this:
+
+```markdown
+![VS Code Search icon: a white magnifying glass on a dark background](https://rvcc-grid-program.github.io/idmx-225-assets/assets/vscode-search-icon.png)
+```
+
+The alt text travels with the snippet, but it does not stay linked to it. Once
+pasted, that text belongs to the page it landed on — editing `_data/alts.json`
+later changes the gallery, not any page you already built. There are two pools
+of alt text and one limit: `alts.json` feeds the gallery, and the alt text that
+actually reaches Canvas is written inline in the private content repo, whose own
+checker enforces the same 120-character cap (`scripts/lib/check.js`, error code
+`alt-text-too-long`). That repo documents the end-to-end workflow in
+`docs/adding-an-image-to-a-page.md`.
+
 ## Adding an asset
 
 1. Drop the file into `assets/`. Subfolders are supported and are walked
