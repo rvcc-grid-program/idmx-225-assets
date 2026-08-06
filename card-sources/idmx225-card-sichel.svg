@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(322, 58%, 34%)"/>
+      <stop offset="100%" stop-color="hsl(280, 62%, 22%)"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- oversized initials as the at-a-glance distinguisher -->
+  <text x="568" y="348" font-family="Helvetica, Arial, sans-serif" font-size="268"
+        font-weight="700" fill="hsl(322, 92%, 74%)" fill-opacity="0.30"
+        text-anchor="middle">LS</text>
+
+  <!-- accent bar -->
+  <rect x="60" y="96" width="120" height="12" rx="6" fill="hsl(158, 72%, 56%)"/>
+
+  <text x="60" y="192" font-family="Helvetica, Arial, sans-serif" font-size="76"
+        font-weight="700" fill="hsl(0, 0%, 100%)">IDMX 225</text>
+
+  <text x="60" y="250" font-family="Helvetica, Arial, sans-serif" font-size="34"
+        font-weight="400" fill="hsl(322, 58%, 88%)">Web Page Development</text>
+
+  <text x="60" y="342" font-family="Helvetica, Arial, sans-serif" font-size="44"
+        font-weight="700" fill="hsl(0, 0%, 100%)">Lynn Sichel</text>
+
+  <text x="60" y="388" font-family="Helvetica, Arial, sans-serif" font-size="30"
+        font-weight="400" fill="hsl(158, 72%, 70%)">In-Person &#183; Fall 2026</text>
+</svg>

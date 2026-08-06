@@ -10,6 +10,11 @@ export default function (eleventyConfig) {
   eleventyConfig.ignores.add("README.md");
   eleventyConfig.ignores.add("NOTICE.md");
 
+  // Card sources are build inputs, not gallery pages. Unlike reports/, this
+  // directory is committed, so .gitignore (which Eleventy honors) does not
+  // keep its README out of the build — it has to be named here.
+  eleventyConfig.ignores.add("card-sources/**");
+
   return {
     dir: { input: ".", output: "_site", data: "_data" },
     // URLs in the gallery are absolute (built from site.baseUrl), so no

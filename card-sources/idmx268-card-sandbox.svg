@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(211, 84%, 22%)"/>
+      <stop offset="55%" stop-color="hsl(229, 80%, 30%)"/>
+      <stop offset="100%" stop-color="hsl(261, 88%, 34%)"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- oversized shortcode as the at-a-glance distinguisher -->
+  <text x="636" y="392" font-family="Helvetica, Arial, sans-serif" font-size="140"
+        font-weight="700" fill="hsl(261, 94%, 72%)" fill-opacity="0.28"
+        text-anchor="middle">WD2</text>
+
+  <!-- accent bar -->
+  <rect x="60" y="96" width="120" height="12" rx="6" fill="hsl(154, 77%, 48%)"/>
+
+  <text x="60" y="192" font-family="Helvetica, Arial, sans-serif" font-size="76"
+        font-weight="700" fill="hsl(0, 0%, 100%)">IDMX 268</text>
+
+  <text x="60" y="250" font-family="Helvetica, Arial, sans-serif" font-size="34"
+        font-weight="400" fill="hsl(229, 90%, 88%)">Web Page Development II</text>
+
+  <text x="60" y="342" font-family="Helvetica, Arial, sans-serif" font-size="44"
+        font-weight="700" fill="hsl(0, 0%, 100%)">SANDBOX</text>
+
+  <text x="60" y="388" font-family="Helvetica, Arial, sans-serif" font-size="30"
+        font-weight="400" fill="hsl(154, 77%, 66%)">Empty shell &#183; dev Fall 2022</text>
+</svg>
